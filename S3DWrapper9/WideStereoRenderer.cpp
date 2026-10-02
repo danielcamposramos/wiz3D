@@ -2240,8 +2240,8 @@ STDMETHODIMP CWideStereoRenderer::UpdateTexture(IDirect3DBaseTexture9* pSourceTe
 #endif
 	if (!DEBUG_SKIP_CRC_CHECK && (!g_ProfileData.TextureCRCMultiplier.empty() || bCalculateForAll))
 	{
-		CComQIPtr<IDirect3DTexture9> pSrcTexture = pSourceTexture;
-		CComQIPtr<IDirect3DTexture9> pDstTexture = pDestinationTexture;
+		CComQIPtr<IDirect3DTexture9> pSrcTexture(pSourceTexture);
+		CComQIPtr<IDirect3DTexture9> pDstTexture(pDestinationTexture);
 		if (pSrcTexture && pDstTexture)
 		{
 			CComPtr<IDirect3DSurface9> pSourceSurface;
@@ -2251,8 +2251,8 @@ STDMETHODIMP CWideStereoRenderer::UpdateTexture(IDirect3DBaseTexture9* pSourceTe
 		}
 		else
 		{
-			CComQIPtr<IDirect3DCubeTexture9> pSrcCubeTexture = pSourceTexture;
-			CComQIPtr<IDirect3DCubeTexture9> pDstCubeTexture = pDestinationTexture;
+			CComQIPtr<IDirect3DCubeTexture9> pSrcCubeTexture(pSourceTexture);
+			CComQIPtr<IDirect3DCubeTexture9> pDstCubeTexture(pDestinationTexture);
 			if (pSrcCubeTexture && pDstCubeTexture)
 			{
 				CComPtr<IDirect3DSurface9> pSourceSurface;
@@ -2263,7 +2263,7 @@ STDMETHODIMP CWideStereoRenderer::UpdateTexture(IDirect3DBaseTexture9* pSourceTe
 		}
 	}
 
-	CComQIPtr<IDirect3DTexture9> pLeftDestTex = pLeftDestBaseTex;
+	CComQIPtr<IDirect3DTexture9> pLeftDestTex(pLeftDestBaseTex);
 	if (pLeftDestTex == NULL)
 		return hResult;
 

@@ -99,7 +99,7 @@ BOOL GetD3D9DllName(TCHAR* dll)
 	HKEY hKey;
 	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Direct3D", 0, KEY_QUERY_VALUE, &hKey) == ERROR_SUCCESS)
 	{
-		DWORD Size = sizeof BOOL;
+		DWORD Size = sizeof(BOOL);
 		RegQueryValueEx(hKey, TEXT("LoadDebugRuntime"),	NULL, NULL,	(LPBYTE)&LoadDebugRuntime, &Size);
 	}
 	if (LoadDebugRuntime)

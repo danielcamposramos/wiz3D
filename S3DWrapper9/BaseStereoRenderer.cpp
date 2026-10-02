@@ -322,7 +322,7 @@ HRESULT CBaseStereoRenderer::DoInitialize()
 		}
 		else if (USE_MULTI_DEVICE_PRESENTER)
 		{
-			CComQIPtr<IDirect3D9Ex>	pD3DEx	= m_pDirect3D;
+			CComQIPtr<IDirect3D9Ex>	pD3DEx(m_pDirect3D);
 			m_pPresenterThread	= BackgroundPresenterThread::CreateBackgroundPresenterThread(
 				this,
 				pD3DEx,
@@ -419,7 +419,7 @@ HRESULT CBaseStereoRenderer::DoInitialize()
 		}
 		else
 		{
-			CComQIPtr<IDirect3D9Ex> pD3DEx = m_pDirect3D;
+			CComQIPtr<IDirect3D9Ex> pD3DEx(m_pDirect3D);
 			if (pD3DEx)
 			{
 				SetUMEvent UMEvent(this, reCreatingDevice);

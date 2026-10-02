@@ -149,7 +149,7 @@ class CArgumentWrappers
 public:
 	~CArgumentWrappers()
 	{
-		for(auto &it = m_args.begin();it != m_args.end();++it) (*it)->Delete();//delete *it;
+		for(auto it = m_args.begin();it != m_args.end();++it) (*it)->Delete();//delete *it;
 		m_args.clear();
 	}
 

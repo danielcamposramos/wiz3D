@@ -15,6 +15,7 @@
 #include "Presenter.h"
 
 class CBaseStereoRenderer;
+LRESULT CALLBACK S3DWindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
 class ScalingHook;
 class MouseHook;

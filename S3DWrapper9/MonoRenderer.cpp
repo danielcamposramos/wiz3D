@@ -206,7 +206,7 @@ HRESULT CMonoRenderer::DoInitialize()
 	}
 	else
 	{
-		CComQIPtr<IDirect3D9Ex> pD3DEx = m_pDirect3D;
+		CComQIPtr<IDirect3D9Ex> pD3DEx(m_pDirect3D);
 		if (pD3DEx)
 		{
 			CComPtr<IDirect3DDevice9Ex> pDevEx;

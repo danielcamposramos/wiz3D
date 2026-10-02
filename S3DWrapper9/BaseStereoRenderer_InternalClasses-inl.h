@@ -99,7 +99,7 @@ BOOL ShaderPipelineData<T, Q>::GetShaderPrivateData(Q* shader)
 			DWORD	dataSizeInDwords = m_CurrentShaderData.GetDataSizeInDwords();
 			if(p[1] == ((dataSizeInDwords << 16) | 0xFFFE))
 			{
-				memcpy(&m_CurrentShaderData, (p+2), sizeof T);
+				memcpy(&m_CurrentShaderData, (p+2), sizeof(T));
 
 				// Foreign-shader guard: 0xFFFE is the DX9 shader-bytecode COMMENT
 				// opcode used by CTAB and other tools, not just our metadata. SR's

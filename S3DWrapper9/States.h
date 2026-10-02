@@ -222,6 +222,6 @@ struct AllStates
 	RECT sr;
 	void Clear()
 	{
-		ZeroMemory(this, sizeof AllStates);
+		ZeroMemory(this, sizeof(AllStates));
 	}
 };
