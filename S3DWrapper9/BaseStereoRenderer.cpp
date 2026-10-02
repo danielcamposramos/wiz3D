@@ -408,7 +408,7 @@ HRESULT CBaseStereoRenderer::DoInitialize()
 					_T("m_BehaviorFlags = %s, m_PresentationParameters = %s, m_pDirect3DDevice = %p)"),
 					m_nAdapter[0], GetDeviceTypeString(m_DeviceType), m_hFocusWindow,
 					GetBehaviorFlagsString(m_BehaviorFlags), 
-					GetPresentationParametersString(pPar), pDirect3DDevice));
+					GetPresentationParametersString(pPar), pDirect3DDevice.p));
 			}
 			if( oldHZ )
 			{
@@ -430,7 +430,7 @@ HRESULT CBaseStereoRenderer::DoInitialize()
 					m_nAdapter[0], GetDeviceTypeString(m_DeviceType), m_hFocusWindow,
 					GetBehaviorFlagsString(m_BehaviorFlags), 
 					GetPresentationParametersString(&GetBaseSC()->m_PresentationParameters[0]), 
-					GetDisplayModeExString(GetBaseSC()->m_pFullscreenDisplayMode), pDevEx));
+					GetDisplayModeExString(GetBaseSC()->m_pFullscreenDisplayMode), pDevEx.p));
 				pDirect3DDevice = pDevEx;
 			}
 		}

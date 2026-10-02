@@ -117,6 +117,6 @@ void TexData::Init(IDirect3DBaseTexture9* pTexture, IDirect3DBaseTexture9* pMain
 	if (pMainTexture && GetTextureType(pMainTexture) == Stereo)
 	{
 		GetStereoObject(pTexture, &m_pRight);
-		DEBUG_TRACE2(_T("\tpRightTex = %p [%s])\n"), m_pRight, GetObjectName(m_pRight));
+		DEBUG_TRACE2(_T("\tpRightTex = %p [%s])\n"), m_pRight.p, GetObjectName(m_pRight));
 	}
 }

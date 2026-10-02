@@ -49,7 +49,7 @@ HRESULT CSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 			_T("MultisampleQuality = %08X, Lockable = %1d, *ppSurface = %p, pSharedHandle = %p)"), 
 			m_BackBufferSizeBeforeScaling.cx, m_BackBufferSizeBeforeScaling.cy, GetFormatString(RenderTargetDesc.Format), 
 			GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality, 
-			m_bLockableBackBuffer, m_pStereoBBLeft, 0));
+			m_bLockableBackBuffer, m_pStereoBBLeft.p, 0));
 		NSCALL_TRACE_RES(GetD3D9Device().CreateRenderTarget(BBRightSize.cx, BBRightSize.cy,
 			RenderTargetDesc.Format, m_MultiSampleType, m_MultiSampleQuality, 
 			m_bLockableBackBuffer, &m_pStereoBBRight, 0), m_pStereoBBRight,
@@ -57,7 +57,7 @@ HRESULT CSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 			_T("MultisampleQuality = %08X, Lockable = %1d, *ppSurface = %p, pSharedHandle = %p)"), 
 			BBRightSize.cx, BBRightSize.cy, GetFormatString(RenderTargetDesc.Format), 
 			GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality, 
-			m_bLockableBackBuffer, m_pStereoBBRight, 0));
+			m_bLockableBackBuffer, m_pStereoBBRight.p, 0));
 		m_pStereoBBRight->SetPrivateData(OriginalSurfaceSize_GUID, &m_BackBufferSizeBeforeScaling, sizeof(SIZE), 0);
 		INC_DEBUG_COUNTER(GetBaseDevice()->m_nRenderTargetsStereoSize, GetSurfaceSize(m_pStereoBBLeft));
 		INC_DEBUG_COUNTER(GetBaseDevice()->m_nRenderTargetsStereoSize, GetSurfaceSize(m_pStereoBBRight));
@@ -142,7 +142,7 @@ HRESULT CSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 					_T("pSharedHandle = %p)"), m_BackBufferSizeBeforeScaling.cx, m_BackBufferSizeBeforeScaling.cy, 
 					GetFormatString(DepthStencilDesc.Format), 
 					GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality, FALSE, 
-					m_pPrimaryDepthStencil, NULL));
+					m_pPrimaryDepthStencil.p, NULL));
 
 				INC_DEBUG_COUNTER(GetBaseDevice()->m_nDepthStencilSurfacesStereoSize, GetSurfaceSize(m_pPrimaryDepthStencil));
 			}
@@ -168,7 +168,7 @@ HRESULT CSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 				_T("pSharedHandle = %p)"), BBRightSize.cx, BBRightSize.cy, 
 				GetFormatString(DepthStencilDesc.Format), 
 				GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality, FALSE, 
-				m_pSecondaryDepthStencil, NULL));
+				m_pSecondaryDepthStencil.p, NULL));
 			m_pSecondaryDepthStencil->SetPrivateData(OriginalSurfaceSize_GUID, &m_BackBufferSizeBeforeScaling, sizeof(SIZE), 0);
 			SetStereoObject(m_pPrimaryDepthStencil, m_pSecondaryDepthStencil);
 		}

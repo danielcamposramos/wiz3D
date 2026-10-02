@@ -44,7 +44,7 @@ HRESULT CWideSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 			_T("MultisampleQuality = %08X, Lockable = %1d, *ppSurface = %p, pSharedHandle = %p)"), 
 			Width, Height, GetFormatString(RenderTargetDesc.Format), 
 			GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality,
-			m_bLockableBackBuffer, m_pWidePrimaryBackBuffer, 0));
+			m_bLockableBackBuffer, m_pWidePrimaryBackBuffer.p, 0));
 		if(SUCCEEDED(hResult) && m_pWidePrimaryBackBuffer)
 		{
 			INC_DEBUG_COUNTER(GetBaseDevice()->m_nRenderTargetsStereoSize, GetSurfaceSize(m_pWidePrimaryBackBuffer));
@@ -82,7 +82,7 @@ HRESULT CWideSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 		_T("MultisampleQuality = %08X, Lockable = %1d, *ppSurface = %p, pSharedHandle = %p)"), 
 		Width, Height, GetFormatString(RenderTargetDesc.Format), 
 		GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality,
-		m_bLockableBackBuffer, m_pWidePrimaryBackBufferBeforeScaling, 0));
+		m_bLockableBackBuffer, m_pWidePrimaryBackBufferBeforeScaling.p, 0));
 	if(SUCCEEDED(hResult) && m_pWidePrimaryBackBufferBeforeScaling)
 	{
 		SetMcClaudFlag(m_pWidePrimaryBackBufferBeforeScaling);
@@ -154,7 +154,7 @@ HRESULT CWideSwapChain::InitializeMode( D3DSURFACE_DESC &RenderTargetDesc )
 				_T("pSharedHandle = %p)"), Width, Height, GetFormatString(DepthStencilDesc.Format), 
 				GetMultiSampleString(m_MultiSampleType), m_MultiSampleQuality, 
 				m_OriginalPresentationParameters.Flags & D3DPRESENTFLAG_DISCARD_DEPTHSTENCIL, 
-				m_pWidePrimaryDepthStencil, NULL));
+				m_pWidePrimaryDepthStencil.p, NULL));
 
 			if (SUCCEEDED(hResult) && m_pWidePrimaryDepthStencil)
 			{		

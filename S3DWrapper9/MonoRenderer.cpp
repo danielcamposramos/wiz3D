@@ -202,7 +202,7 @@ HRESULT CMonoRenderer::DoInitialize()
 			_T("m_BehaviorFlags = %s, m_PresentationParameters = %s, m_pDirect3DDevice = %p)"),
 			m_OriginalAdapter, GetDeviceTypeString(m_DeviceType), m_hFocusWindow,
 			GetBehaviorFlagsString(m_OriginalBehaviorFlags), 
-			GetPresentationParametersString(&GetMonoSC()->m_OriginalPresentationParameters), pDirect3DDevice));
+			GetPresentationParametersString(&GetMonoSC()->m_OriginalPresentationParameters), pDirect3DDevice.p));
 	}
 	else
 	{
@@ -217,7 +217,7 @@ HRESULT CMonoRenderer::DoInitialize()
 				m_OriginalAdapter, GetDeviceTypeString(m_DeviceType), m_hFocusWindow,
 				GetBehaviorFlagsString(m_OriginalBehaviorFlags), 
 				GetPresentationParametersString(&GetMonoSC()->m_OriginalPresentationParameters), 
-				GetDisplayModeExString(GetMonoSC()->m_pFullscreenDisplayMode), pDevEx));
+				GetDisplayModeExString(GetMonoSC()->m_pFullscreenDisplayMode), pDevEx.p));
 			pDirect3DDevice = pDevEx;
 		}
 	}

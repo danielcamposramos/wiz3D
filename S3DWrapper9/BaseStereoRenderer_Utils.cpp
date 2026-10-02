@@ -1272,7 +1272,7 @@ void CBaseStereoRenderer::SaveStereoTextureToFile(TCHAR* szFileName, IDirect3DBa
 			D3DMULTISAMPLE_NONE, 0, FALSE, &JPSSurface, 0),
 			DEBUG_MESSAGE(_T("CreateRenderTarget(Width = %d, Height = %d, Format = %s, MultiSample = D3DMULTISAMPLE_NONE,")
 			_T("MultisampleQuality = 0, Lockable = FALSE, *ppSurface = %p, pSharedHandle = 0)"), 
-			Width * 2, Height, GetFormatString(desc.Format), JPSSurface));
+			Width * 2, Height, GetFormatString(desc.Format), JPSSurface.p));
 		if(SUCCEEDED(hResult))
 		{
 			RECT leftDestRect = { Width, 0, Width * 2, Height };
@@ -1894,7 +1894,7 @@ DWORD CBaseStereoRenderer::CalculateSurfaceCRC( D3DSURFACE_DESC* pDesc, IDirect3
 			DEBUG_MESSAGE(_T("CreateOffscreenPlainSurface(Width = %u, Height = %u, Format = %s, ")
 			_T("Pool = %s, *ppSurface = %p, pSharedHandle = %p)"), 
 			Width, Height, GetFormatString(D3DFMT_A8R8G8B8), 
-			GetPoolString(D3DPOOL_SYSTEMMEM), pUnpackedSurface, 0));
+			GetPoolString(D3DPOOL_SYSTEMMEM), pUnpackedSurface.p, 0));
 		if(SUCCEEDED(hResult))
 		{
 			RECT DestRect;
@@ -1911,7 +1911,7 @@ DWORD CBaseStereoRenderer::CalculateSurfaceCRC( D3DSURFACE_DESC* pDesc, IDirect3
 			NSCALL_TRACE3(D3DXLoadSurfaceFromSurface(pUnpackedSurface, 0, pDestRect, 
 				pSurf, 0, pSourceRect, D3DX_FILTER_NONE, 0),
 				DEBUG_MESSAGE(_T("D3DXLoadSurfaceFromSurface(pDestSurface = %p[%s], 0, 0, pSourceSurface = %p[%s], 0, 0, D3DX_FILTER_NONE, 0)"),
-				pUnpackedSurface, GetObjectName(pUnpackedSurface), pSurf, GetObjectName(pSurf)));
+				pUnpackedSurface.p, GetObjectName(pUnpackedSurface), pSurf.p, GetObjectName(pSurf)));
 			if(SUCCEEDED(hResult))
 			{
 				pSurf.Release();
@@ -2054,7 +2054,7 @@ void CBaseStereoRenderer::CheckYouTubeTexture( UINT Width, UINT Height, DWORD Us
 		DEBUG_MESSAGE(_T("\tCreateTexture(Width = %d, Height = %d, Levels = %d, Usage = %s, ")
 			_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 			Width, Height, 1, GetUsageString(0), GetFormatString(Format), 
-			GetPoolString(Pool), pLeftTexture, NULL));
+			GetPoolString(Pool), pLeftTexture.p, NULL));
 	if (FAILED(hResult))
 		return;
 	hResult = pTexture->SetPrivateData(YouTubeLeftTexture_GUID, pLeftTexture, sizeof(IUnknown *), D3DSPD_IUNKNOWN);
@@ -2064,7 +2064,7 @@ void CBaseStereoRenderer::CheckYouTubeTexture( UINT Width, UINT Height, DWORD Us
 		DEBUG_MESSAGE(_T("\tCreateTexture(Width = %d, Height = %d, Levels = %d, Usage = %s, ")
 			_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 			Width, Height, 1, GetUsageString(0), GetFormatString(Format), 
-			GetPoolString(Pool), pRightTexture, NULL));
+			GetPoolString(Pool), pRightTexture.p, NULL));
 	if (FAILED(hResult))
 	{
 		hResult = pTexture->FreePrivateData(YouTubeLeftTexture_GUID);

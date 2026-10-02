@@ -795,7 +795,7 @@ STDMETHODIMP CStereoRenderer::StretchRect(
 			if (GetParentTexture(pDestSurface, &pLeftTexDest))
 			{
 				DEBUG_TRACE3(_T("\tSetTextureType %p [%s]: TextureType = %s\n"), 
-					pLeftTexDest, GetObjectName(pLeftTexDest), GetTextureTypeString(destTextureType));
+					pLeftTexDest.p, GetObjectName(pLeftTexDest), GetTextureTypeString(destTextureType));
 				SetTextureType(pLeftTexDest, destTextureType);
 			}
 
@@ -832,8 +832,8 @@ STDMETHODIMP CStereoRenderer::StretchRect(
 				NSCALL_TRACE2(m_Direct3DDevice.StretchRect( pRightSourceSurface, pRightSourceRect, pRightDestSurface, pRightDestRect, Filter ),
 					DEBUG_MESSAGE(_T("\tStretchRect(pSourceSurface = %p [%s], pSourceRect = %s, ")
 					_T("pDestSurface = %p [%s], pDestRect = %s, Filter = %s)"), 
-					pRightSourceSurface, GetObjectName(pRightSourceSurface), GetRectString(pRightSourceRect), 
-					pRightDestSurface, GetObjectName(pRightDestSurface), GetRectString(pRightDestRect), 
+					pRightSourceSurface.p, GetObjectName(pRightSourceSurface), GetRectString(pRightSourceRect), 
+					pRightDestSurface.p, GetObjectName(pRightDestSurface), GetRectString(pRightDestRect), 
 					GetTextureFilterTypeString(Filter)));
 				if (DO_RTDUMP)
 				{
@@ -911,7 +911,7 @@ STDMETHODIMP CStereoRenderer::ColorFill(IDirect3DSurface9 * pSurface, CONST RECT
 		{
 			NSCALL_TRACE2(m_Direct3DDevice.ColorFill( pRightSurface, pRect, color ),
 				DEBUG_MESSAGE(_T("ColorFill(pSurface = %p [%s], pRect = %s, color = %08X);\n"), 
-				pRightSurface, GetObjectName(pRightSurface), GetRectString(pRect), color));
+				pRightSurface.p, GetObjectName(pRightSurface), GetRectString(pRect), color));
 		}
 	}
 	CComPtr<IDirect3DBaseTexture9> pTexDest;
@@ -920,13 +920,13 @@ STDMETHODIMP CStereoRenderer::ColorFill(IDirect3DSurface9 * pSurface, CONST RECT
 		if (!RenderToRight())
 		{
 			DEBUG_TRACE3(_T("\tSetTextureType %p [%s]: TextureType = %s\n"), 
-				pTexDest, GetObjectName(pTexDest), GetTextureTypeString(Mono));
+				pTexDest.p, GetObjectName(pTexDest), GetTextureTypeString(Mono));
 			SetTextureType(pTexDest, Mono);
 		}
 		else if (pRightSurface && pRect != NULL)
 		{
 			DEBUG_TRACE3(_T("\tSetTextureType %p [%s]: TextureType = %s\n"), 
-				pTexDest, GetObjectName(pTexDest), GetTextureTypeString(Cleared));
+				pTexDest.p, GetObjectName(pTexDest), GetTextureTypeString(Cleared));
 			SetTextureType(pTexDest, Cleared);
 		}
 	}
@@ -976,7 +976,7 @@ STDMETHODIMP CStereoRenderer::UpdateSurface(IDirect3DSurface9* pSourceSurface, C
 	if (GetParentTexture(pDestinationSurface, &pTexDest))
 	{
 		DEBUG_TRACE3(_T("\tSetTextureType %p [%s]: TextureType = %s\n"), 
-			pTexDest, GetObjectName(pTexDest), GetTextureTypeString(Mono));
+			pTexDest.p, GetObjectName(pTexDest), GetTextureTypeString(Mono));
 		SetTextureType(pTexDest, Mono);
 	}
 	if (DO_RTDUMP)

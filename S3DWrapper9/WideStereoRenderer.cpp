@@ -753,7 +753,7 @@ bool CWideStereoRenderer::CopyDepthSurfaces(IDirect3DTexture9* pDepthTexure, CCo
 	IDirect3DTexture9* pWideTex = GetWideTexture(pTex, pLeftTex);
 	if(!pWideTex)
 		return false;
-	DEBUG_TRACE3(_T("\tpLeftTex = %p [%s]\n"), pLeftTex, GetObjectName(pLeftTex));
+	DEBUG_TRACE3(_T("\tpLeftTex = %p [%s]\n"), pLeftTex.p, GetObjectName(pLeftTex));
 	CComPtr<IDirect3DTexture9> pRightTex;
 	if(RenderToRight())
 		GetStereoObject(pLeftTex, &pRightTex);
@@ -874,7 +874,7 @@ STDMETHODIMP CWideStereoRenderer::SetTexture(DWORD Stage, IDirect3DBaseTexture9*
 	{
 		NSCALL_TRACE2(m_Direct3DDevice.SetTexture(Stage, pLeftTex),
 			DEBUG_MESSAGE(_T("SetTexture(Stage = %d, pTexture = %p [%s])"), 
-			Stage, pLeftTex, GetObjectName(pLeftTex)));
+			Stage, pLeftTex.p, GetObjectName(pLeftTex)));
 
 		if(SUCCEEDED(hResult))
 		{
@@ -1328,7 +1328,7 @@ STDMETHODIMP CWideStereoRenderer::CreateTexture(UINT Width, UINT Height, UINT Le
 			DEBUG_MESSAGE(_T("\tCreateTexture(Width = %d, Height = %d, Levels = %d, Usage = %s, ")
 			_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 			Width, Height, Levels, GetUsageString(LeftUsage), GetFormatString(LeftFormat), 
-			GetPoolString(Pool), pLeftTexture, pSharedHandle));
+			GetPoolString(Pool), pLeftTexture.p, pSharedHandle));
 		NSCALL(pWideTexture->SetPrivateData(LeftTexture_GUID, pLeftTexture, sizeof(IUnknown *), D3DSPD_IUNKNOWN));
 
 		if(Succeded(hResult))
@@ -1380,7 +1380,7 @@ STDMETHODIMP CWideStereoRenderer::CreateTexture(UINT Width, UINT Height, UINT Le
 			}
 
 			SetObjectName(pLeftTexture, buffer);
-			DEBUG_TRACE1(_T("\t\tSetObjectName(*ppTexture = %p [%s])\n"), pLeftTexture, GetObjectName(pLeftTexture));
+			DEBUG_TRACE1(_T("\t\tSetObjectName(*ppTexture = %p [%s])\n"), pLeftTexture.p, GetObjectName(pLeftTexture));
 #endif
 
 			CComPtr<IDirect3DTexture9> pRightTexture;
@@ -1389,7 +1389,7 @@ STDMETHODIMP CWideStereoRenderer::CreateTexture(UINT Width, UINT Height, UINT Le
 				DEBUG_MESSAGE(_T("\tCreateTexture(Width = %d, Height = %d, Levels = %d, Usage = %s, ")
 				_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 				Width, Height, Levels, GetUsageString(LeftUsage), GetFormatString(LeftFormat), 
-				GetPoolString(Pool), pRightTexture, pSharedHandle));
+				GetPoolString(Pool), pRightTexture.p, pSharedHandle));
 #ifndef FINAL_RELEASE
 			if(SUCCEEDED(hResult))
 			{
@@ -1404,7 +1404,7 @@ STDMETHODIMP CWideStereoRenderer::CreateTexture(UINT Width, UINT Height, UINT Le
 					m_nDepthStencilTexturesStereoSize += SizeInBytes;
 				}
 				SetObjectName(pRightTexture, buffer);
-				DEBUG_TRACE1(_T("\t\tSetObjectName(*ppTexture = %p [%s])\n"), pRightTexture, GetObjectName(pRightTexture));
+				DEBUG_TRACE1(_T("\t\tSetObjectName(*ppTexture = %p [%s])\n"), pRightTexture.p, GetObjectName(pRightTexture));
 			}
 #endif
 			SetStereoObject(pLeftTexture, pRightTexture);
@@ -1866,7 +1866,7 @@ void CWideStereoRenderer::StretchRectToWideDest(
 		NSCALL_TRACE2(m_Direct3DDevice.StretchRect( pSrcLeftSurf, pSrcLeftRect, pDestSurf, pDestRect, Filter ),
 			DEBUG_MESSAGE(_T("StretchRect(pSourceSurface = %p [%s], pSourceRect = %s, ")
 			_T("pDestSurface = %p [%s], pDestRect = %s, Filter = %s)"), 
-			pSrcLeftSurf, GetObjectName(pSrcLeftSurf), GetRectString(pSrcLeftRect), 
+			pSrcLeftSurf.p, GetObjectName(pSrcLeftSurf), GetRectString(pSrcLeftRect), 
 			pDestSurf, GetObjectName(pDestSurf), GetRectString(pDestRect), 
 			GetTextureFilterTypeString(Filter)));
 
@@ -1889,8 +1889,8 @@ void CWideStereoRenderer::StretchRectToWideDest(
 			NSCALL_TRACE2(m_Direct3DDevice.StretchRect( pSrcRightSurf, pSrcRightRect, pDestRightSurf, pDestRightRect, Filter ),
 				DEBUG_MESSAGE(_T("\tStretchRect(pSourceSurface = %p [%s], pSourceRect = %s, ")
 				_T("pDestSurface = %p [%s], pDestRect = %s, Filter = %s)"), 
-				pSrcRightSurf, GetObjectName(pSrcRightSurf), GetRectString(pSrcRightRect), 
-				pDestRightSurf, GetObjectName(pDestRightSurf), GetRectString(pDestRightRect), 
+				pSrcRightSurf.p, GetObjectName(pSrcRightSurf), GetRectString(pSrcRightRect), 
+				pDestRightSurf.p, GetObjectName(pDestRightSurf), GetRectString(pDestRightRect), 
 				GetTextureFilterTypeString(Filter)));
 
 			if (DO_RTDUMP)
@@ -2008,7 +2008,7 @@ void CWideStereoRenderer::StretchRectToMonoDest( IDirect3DSurface9 * pSourceSurf
 	NSCALL_TRACE2(m_Direct3DDevice.StretchRect( pSrcLeftSurf, pSrcLeftRect, pDestSurface, pDestRect, Filter ),
 		DEBUG_MESSAGE(_T("StretchRect(pSourceSurface = %p [%s], pSourceRect = %s, ")
 		_T("pDestSurface = %p [%s], pDestRect = %s, Filter = %s)"), 
-		pSrcLeftSurf, GetObjectName(pSrcLeftSurf), GetRectString(pSrcLeftRect), 
+		pSrcLeftSurf.p, GetObjectName(pSrcLeftSurf), GetRectString(pSrcLeftRect), 
 		pDestSurface, GetObjectName(pDestSurface), GetRectString(pDestRect), 
 		GetTextureFilterTypeString(Filter)));
 
