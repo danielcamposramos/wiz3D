@@ -1051,13 +1051,15 @@ void S3DAPI_API ConvertImageFrom_R32_FLOAT_To_A8R8G8B8_TYPELESS(void* __restrict
 		t = _mm_max_ps(t, minX);
 		t = _mm_min_ps(t, maxX);
 		__m128i indices = _mm_cvttps_epi32(t);
-		byte c1 = powTable[((const int*)&indices)[0]];
+		__declspec(align(16)) int idx[4];
+		_mm_store_si128((__m128i*)idx, indices);
+		byte c1 = powTable[idx[0]];
 		((DWORD*)d)[0] = MAKEFOURCC(c1, c1, c1, 255);
-		byte c2 = powTable[((const int*)&indices)[1]];
+		byte c2 = powTable[idx[1]];
 		((DWORD*)d)[1] = MAKEFOURCC(c2, c2, c2, 255);
-		byte c3 = powTable[((const int*)&indices)[2]];
+		byte c3 = powTable[idx[2]];
 		((DWORD*)d)[2] = MAKEFOURCC(c3, c3, c3, 255);
-		byte c4 = powTable[((const int*)&indices)[3]];
+		byte c4 = powTable[idx[3]];
 		((DWORD*)d)[3] = MAKEFOURCC(c4, c4, c4, 255);
 		s += 4;
 		d += 4 * 4;
@@ -1154,14 +1156,15 @@ void S3DAPI_API ConvertImageFrom_R32G32B32A32_FLOAT_To_A8R8G8B8_TYPELESS(void* _
 		t = _mm_max_ps(t, minX);
 		t = _mm_min_ps(t, maxX);
 		__m128i indices = _mm_cvttps_epi32(t);
-		byte c1 = powTable[((const int*)&indices)[0]]; /* Devil lib R */
-		byte c2 = powTable[((const int*)&indices)[1]]; /* Devil lib G */
-		byte c3 = powTable[((const int*)&indices)[2]]; /* Devil lib B */
-		byte c4 = (byte)(((const int*)&indices)[3]); /* Devil lib A */
+		__declspec(align(16)) int idx[4];
+		_mm_store_si128((__m128i*)idx, indices);
+		byte c1 = powTable[idx[0]]; /* Devil lib R */
+		byte c2 = powTable[idx[1]]; /* Devil lib G */
+		byte c3 = powTable[idx[2]]; /* Devil lib B */
+		byte c4 = (byte)(idx[3]);      /* Devil lib A */
 		((DWORD*)d)[0] = MAKEFOURCC(c1, c2, c3, c4);
 		s += 4;
 		d += 4;
 	}
 #endif
 }
-
