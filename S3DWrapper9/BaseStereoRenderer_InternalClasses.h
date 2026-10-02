@@ -109,7 +109,7 @@ public:
 	inline void Init() {
 		m_VBStates = vbVerticesChanged;
 		m_VBSize = 0;
-		ZeroMemory(&m_Matrix, sizeof D3DMATRIX);
+		ZeroMemory(&m_Matrix, sizeof(D3DMATRIX));
 	}
 	inline int	GetStates() {
 		return m_VBStates;

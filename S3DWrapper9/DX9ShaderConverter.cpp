@@ -19,13 +19,13 @@
 
 using namespace std;
 
-ShaderCache DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_ShaderCacheData;
-DWORD DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_GlobalCounter = 0;
-DWORD DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_ModifiedCounter = 0;
+template<> ShaderCache DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_ShaderCacheData{};
+template<> DWORD DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_GlobalCounter = 0;
+template<> DWORD DX9ShaderConverter<VS_PRIVATE_DATA, IDirect3DVertexShader9>::m_ModifiedCounter = 0;
 
-ShaderCache DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_ShaderCacheData;
-DWORD DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_GlobalCounter = 0;
-DWORD DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_ModifiedCounter = 0;
+template<> ShaderCache DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_ShaderCacheData{};
+template<> DWORD DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_GlobalCounter = 0;
+template<> DWORD DX9ShaderConverter<PS_PRIVATE_DATA, IDirect3DPixelShader9>::m_ModifiedCounter = 0;
 
 
 //------------------------------------ class DX9ShaderConverter -----------------------------------
@@ -440,7 +440,7 @@ void DX9ShaderConverter<T, Q>::CalculateCRCEx( CONST DWORD * pFunction, UINT Siz
 		UINT codeSize = Size - (UINT)((CONST BYTE*)command - (CONST BYTE*)pFunction);
 		_ASSERT(codeSize < Size);
 		m_CurrentShaderData.CRC32 = CalculateCRC32((CONST BYTE*)command, codeSize,
-			CalculateCRC32((CONST BYTE*)pFunction, sizeof DWORD));
+			CalculateCRC32((CONST BYTE*)pFunction, sizeof(DWORD)));
 #ifdef ZLOG_ALLOW_TRACING
 		TCHAR szBuffer[8] = _T("");
 		if (unknownId > 0x30303030)

@@ -306,7 +306,7 @@ void CBaseSwapChain::RestoreDeviceMode( )
 		if (m_DevScreen1.cx != 0 && m_DevScreen1.cy != 0)
 		{
 			MONITORINFOEX mi;
-			mi.cbSize = sizeof MONITORINFOEX;
+			mi.cbSize = sizeof(MONITORINFOEX);
 			HMONITOR hMonitor1 = GetMonitorHandle(0);
 			GetMonitorInfo(hMonitor1, &mi);				
 			DEVMODE deviceMode;
@@ -321,7 +321,7 @@ void CBaseSwapChain::RestoreDeviceMode( )
 		if (m_DevScreen2.cx != 0 && m_DevScreen2.cy != 0)
 		{
 			MONITORINFOEX mi2;
-			mi2.cbSize = sizeof MONITORINFOEX;
+			mi2.cbSize = sizeof(MONITORINFOEX);
 			HMONITOR hMonitor2 = GetMonitorHandle(1);
 			GetMonitorInfo(hMonitor2, &mi2);
 			DEVMODE deviceMode2;
@@ -458,7 +458,7 @@ HRESULT CBaseSwapChain::ModifyPresentParameters()
 				if(m_bWorkInWindow)
 				{
 					MONITORINFOEX mi;
-					mi.cbSize = sizeof MONITORINFOEX;
+					mi.cbSize = sizeof(MONITORINFOEX);
 					HMONITOR hMonitor1 = GetMonitorHandle(0);
 					GetMonitorInfo(hMonitor1, &mi);				
 					DEVMODE deviceMode;
@@ -467,7 +467,7 @@ HRESULT CBaseSwapChain::ModifyPresentParameters()
 					EnumDisplaySettings(mi.szDevice, ENUM_CURRENT_SETTINGS, &deviceMode);
 
 					MONITORINFOEX mi2;
-					mi2.cbSize = sizeof MONITORINFOEX;
+					mi2.cbSize = sizeof(MONITORINFOEX);
 					HMONITOR hMonitor2 = GetMonitorHandle(1);
 					GetMonitorInfo(hMonitor2, &mi2);
 					DEVMODE deviceMode2;
@@ -515,7 +515,7 @@ HRESULT CBaseSwapChain::ModifyPresentParameters()
 			DEBUG_MESSAGE(_T("Emulate fullscreen mode\n"));
 			GetBaseDevice()->m_bDebugWarningEmulateFullscreenMode = TRUE;
 			MONITORINFOEX mi;
-			mi.cbSize = sizeof MONITORINFOEX;
+			mi.cbSize = sizeof(MONITORINFOEX);
 			HMONITOR hMonitor1 = GetMonitorHandle(0);
 			GetMonitorInfo(hMonitor1, &mi);				
 			DEVMODE deviceMode;
@@ -535,7 +535,7 @@ HRESULT CBaseSwapChain::ModifyPresentParameters()
 			if (GetBaseDevice()->m_bTwoWindows)
 			{
 				MONITORINFOEX mi2;
-				mi2.cbSize = sizeof MONITORINFOEX;
+				mi2.cbSize = sizeof(MONITORINFOEX);
 				HMONITOR hMonitor2 = GetMonitorHandle(1);
 				GetMonitorInfo(hMonitor2, &mi2);
 				DEVMODE deviceMode2;
@@ -1302,7 +1302,7 @@ HRESULT CBaseSwapChain::CallPresent()
 		}
 		else
 		{
-			CComQIPtr<IDirect3DDevice9Ex> pD3D9DevEx = GetD3D9Device();
+			CComQIPtr<IDirect3DDevice9Ex> pD3D9DevEx(GetD3D9Device());
 			if (bFullscreen)
 			{
 				//--- Multihead mode doesn't support regions in Present() ---

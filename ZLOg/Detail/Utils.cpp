@@ -21,7 +21,7 @@ namespace detail {
 const char* dbg_sprintf(const char *format, ...)
 {
 	long counter = _InterlockedIncrement(&g_BufferCounter);
-	unsigned long bufferId = unsigned long(counter) % NUM_BUFFERS;
+	unsigned long bufferId = (unsigned long)(counter) % NUM_BUFFERS;
 
 	va_list valist;
 	va_start(valist, format);
@@ -34,7 +34,7 @@ const char* dbg_sprintf(const char *format, ...)
 const wchar_t* dbg_sprintf(const wchar_t *format, ...)
 {
 	long counter = _InterlockedIncrement(&g_BufferCounter);
-	unsigned long bufferId = unsigned long(counter) % NUM_BUFFERS;
+	unsigned long bufferId = (unsigned long)(counter) % NUM_BUFFERS;
 
 	va_list valist;
 	va_start(valist, format);

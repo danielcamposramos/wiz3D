@@ -213,7 +213,7 @@ private:
 		if ( !HookCode( *(PVOID*)(&pCode), pCallbackFunc, (PVOID*)&pNextHook, flags) ) {
 			throw hook_error();
 		}
-		hooks.insert( hook_map::value_type(key, this) );
+		hooks.insert( typename hook_map::value_type(key, this) );
 	}
 
 public:
@@ -423,7 +423,7 @@ boost::intrusive_ptr< unique_member_hook<Interface, SrcSig, DstFunc> > get_uniqu
 	void** vtabl = *(void***)iface;
 	void*  pCode = vtabl[function_offset<SrcSig, pMemberFunc>::value];
 	
-	auto key  = hook_type::key_type(pCode, pCallbackFunc);
+	auto key  = typename hook_type::key_type(pCode, pCallbackFunc);
 	auto iter = hook_type::hooks.find(iface);
 	if ( iter != hook_type::hooks.end() ) {
 		hook.reset(iter->second);
@@ -455,7 +455,7 @@ boost::intrusive_ptr< unique_member_hook<Interface, SrcSig, DstFunc> > make_uniq
 	void** vtabl = *(void***)iface;
 	void*  pCode = vtabl[function_offset<SrcSig, pMemberFunc>::value];
 
-	auto key  = hook_type::key_type(pCode, pCallbackFunc);
+	auto key  = typename hook_type::key_type(pCode, pCallbackFunc);
 	auto iter = hook_type::hooks.find(iface);
 	if ( iter != hook_type::hooks.end() ) {
 		hook.reset(iter->second);

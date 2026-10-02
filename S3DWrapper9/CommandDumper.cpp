@@ -7,7 +7,7 @@
 using namespace LlamaXML;
 
 CCommandDumper CCommandDumper::m_instance;
-LONG CInsideDriverHelper::m_counter;
+__declspec(thread) LONG CInsideDriverHelper::m_counter;
 
 void CArgumentWrappers::SetNames(const char *names)
 {
@@ -134,7 +134,7 @@ UINT64 SaveToBinaryFile(const void *data,int len)
 	key.push_back(len);
 	//for(unsigned i = 0;i < count;i++) key.push_back(params[i]);
 
-	auto &it = m_storedDataCache.find(key);
+	auto it = m_storedDataCache.find(key);
 	if (it != m_storedDataCache.end()) return it->second;
 
 	using namespace std;

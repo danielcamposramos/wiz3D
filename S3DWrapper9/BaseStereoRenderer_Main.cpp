@@ -1765,7 +1765,7 @@ void CBaseStereoRenderer::UpdateRHWMatrix()
 	DEBUG_TRACE3(_T("UpdateRHWMatrix\n"));
 
 #ifdef ZLOG_ALLOW_TRACING
-	if (!m_bUpdatedSkewMatrices && (memcmp(&m_OldViewPort, &m_ViewPort, sizeof D3DVIEWPORT9) == 0))
+	if (!m_bUpdatedSkewMatrices && (memcmp(&m_OldViewPort, &m_ViewPort, sizeof(D3DVIEWPORT9)) == 0))
 	{
 		if (zlog::GetSeverity() == zlog::SV_FLOOD)
 		{

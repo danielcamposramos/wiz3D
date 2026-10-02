@@ -968,7 +968,7 @@ void S3DAPI_API ConvertImageFrom_R10G10B10A2_UNORM_To_A8R8G8B8_TYPELESS( void* _
 	}
 }
 
-inline bool isinf(float val)
+inline bool is_inf_f(float val)
 {
 	return ((*(DWORD*)&val) & 0x7f800000) == 0x7f800000;
 }
@@ -983,7 +983,7 @@ void FindMinMaxLum_R32_FLOAT( void* srcBuffer, DWORD width, DWORD height, UINT r
 		for(DWORD i = 0; i< width; i++)
 		{
 			float lum = s[0];
-			if (!isinf(lum))
+			if (!is_inf_f(lum))
 			{
 				if(lum > maxLum)
 					maxLum = lum;
@@ -1051,13 +1051,13 @@ void S3DAPI_API ConvertImageFrom_R32_FLOAT_To_A8R8G8B8_TYPELESS(void* __restrict
 		t = _mm_max_ps(t, minX);
 		t = _mm_min_ps(t, maxX);
 		__m128i indices = _mm_cvttps_epi32(t);
-		byte c1 = powTable[indices.m128i_i32[0]];
+		byte c1 = powTable[((const int*)&indices)[0]];
 		((DWORD*)d)[0] = MAKEFOURCC(c1, c1, c1, 255);
-		byte c2 = powTable[indices.m128i_i32[1]];
+		byte c2 = powTable[((const int*)&indices)[1]];
 		((DWORD*)d)[1] = MAKEFOURCC(c2, c2, c2, 255);
-		byte c3 = powTable[indices.m128i_i32[2]];
+		byte c3 = powTable[((const int*)&indices)[2]];
 		((DWORD*)d)[2] = MAKEFOURCC(c3, c3, c3, 255);
-		byte c4 = powTable[indices.m128i_i32[3]];
+		byte c4 = powTable[((const int*)&indices)[3]];
 		((DWORD*)d)[3] = MAKEFOURCC(c4, c4, c4, 255);
 		s += 4;
 		d += 4 * 4;
@@ -1088,14 +1088,14 @@ void FindMinMuxLum_R32G32B32A32_FLOAT( void* srcBuffer, DWORD dataSize, float &m
 	for (DWORD i = 0; i < dataSize; i++)
 	{
 		float lum = s[0] * 0.2989f + s[1] * 0.5870f + s[2] * 0.1140f;
-		if (!isinf(lum))
+		if (!is_inf_f(lum))
 		{
 			if(lum > maxLum)
 				maxLum = lum;
 			if(lum < minLum)
 				minLum = lum;
 		}
-		if (!isinf(s[3]))
+		if (!is_inf_f(s[3]))
 		{
 			if(s[3] > maxA)
 				maxA = s[3];
@@ -1154,10 +1154,10 @@ void S3DAPI_API ConvertImageFrom_R32G32B32A32_FLOAT_To_A8R8G8B8_TYPELESS(void* _
 		t = _mm_max_ps(t, minX);
 		t = _mm_min_ps(t, maxX);
 		__m128i indices = _mm_cvttps_epi32(t);
-		byte c1 = powTable[indices.m128i_i32[0]]; /* Devil lib R */
-		byte c2 = powTable[indices.m128i_i32[1]]; /* Devil lib G */
-		byte c3 = powTable[indices.m128i_i32[2]]; /* Devil lib B */
-		byte c4 = (byte)(indices.m128i_i32[3]); /* Devil lib A */
+		byte c1 = powTable[((const int*)&indices)[0]]; /* Devil lib R */
+		byte c2 = powTable[((const int*)&indices)[1]]; /* Devil lib G */
+		byte c3 = powTable[((const int*)&indices)[2]]; /* Devil lib B */
+		byte c4 = (byte)(((const int*)&indices)[3]); /* Devil lib A */
 		((DWORD*)d)[0] = MAKEFOURCC(c1, c2, c3, c4);
 		s += 4;
 		d += 4;
