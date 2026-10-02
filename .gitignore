@@ -403,3 +403,7 @@ Testing/Tutorial07-DX9-DM/
 # 3D Vision Direct reference source, OGL wrapper mirrors, etc.).
 lib/**
 !ThirdPartyLibs/**
+
+# Linux build (build-linux.sh)
+/build-linux-obj/
+/out/
