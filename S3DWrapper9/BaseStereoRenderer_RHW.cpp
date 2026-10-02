@@ -152,7 +152,7 @@ HRESULT CBaseStereoRenderer::TransformPrimitiveInit(UINT &StartVertex, UINT MinV
 				DEBUG_MESSAGE(_T("RHW: CreateVertexBuffer(Length = %d, Usage = %s (%s), FVF = %s, Pool = %s, ")
 				_T("*ppVertexBuffer = %p, pSharedHandle = %p)"),
 				size * 2, GetUsageString(Usage), GetUsageString(vbDesc.Usage), GetFVFString(vbDesc.FVF), GetPoolString(vbDesc.Pool), 
-				m_pModifiedVertexBuffer, NULL));
+				m_pModifiedVertexBuffer.p, NULL));
 			if (FAILED(hResult))
 			{
 				m_pLockVBData.Release();

@@ -184,7 +184,7 @@ HRESULT CBaseSwapChain::Initialize(IDirect3DSwapChain9* pSwapChain)
 		_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 		m_BackBufferSize.cx, m_BackBufferSize.cy, 1, GetUsageString(D3DUSAGE_RENDERTARGET), 
 		GetFormatString(RenderTargetDesc.Format), GetPoolString(D3DPOOL_DEFAULT), 
-		m_pLeftMethodTexture, 0));
+		m_pLeftMethodTexture.p, 0));
 	NSCALL_TRACE_RES(GetD3D9Device().CreateTexture(m_BackBufferSize.cx, m_BackBufferSize.cy, 1, 
 		D3DUSAGE_RENDERTARGET, RenderTargetDesc.Format, D3DPOOL_DEFAULT, 
 		&m_pRightMethodTexture, 0), m_pRightMethodTexture,
@@ -192,7 +192,7 @@ HRESULT CBaseSwapChain::Initialize(IDirect3DSwapChain9* pSwapChain)
 		_T("Format = %s, Pool = %s, *ppTexture = %p, pSharedHandle = %p)"), 
 		m_BackBufferSize.cx, m_BackBufferSize.cy, 1, GetUsageString(D3DUSAGE_RENDERTARGET), 
 		GetFormatString(RenderTargetDesc.Format), GetPoolString(D3DPOOL_DEFAULT), 
-		m_pRightMethodTexture, 0));
+		m_pRightMethodTexture.p, 0));
 	INC_DEBUG_COUNTER(GetBaseDevice()->m_nRenderTargetsStereoSize, GetTextureSize(m_pLeftMethodTexture));
 	INC_DEBUG_COUNTER(GetBaseDevice()->m_nRenderTargetsStereoSize, GetTextureSize(m_pRightMethodTexture));
 	SetStereoObject(m_pLeftMethodTexture, m_pRightMethodTexture);
@@ -213,7 +213,7 @@ HRESULT CBaseSwapChain::Initialize(IDirect3DSwapChain9* pSwapChain)
 			DEBUG_MESSAGE(_T("CreateRenderTarget(Width = %d, Height = %d, Format = %s, ")
 			_T("Multisample = %s, MSQuality = %d, Lockable = %d, *ppSurface = %p, pSharedHandle = %p)"), 
 			m_BackBufferSize.cx, 2 * m_BackBufferSize.cy, GetFormatString(RenderTargetDesc.Format), 
-			GetMultiSampleString(D3DMULTISAMPLE_NONE), 0, FALSE, m_pWidePresenterSurface, 0));
+			GetMultiSampleString(D3DMULTISAMPLE_NONE), 0, FALSE, m_pWidePresenterSurface.p, 0));
 	}
 	
 	if (m_PresentationParameters->EnableAutoDepthStencil)

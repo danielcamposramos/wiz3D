@@ -174,7 +174,7 @@ const ShaderProfileData* ShaderPipelineData<T, Q>::FindProfile( ShaderProfileDat
 		if (i != map.end())
 		{
 			DEBUG_TRACE3(_T("ShaderCRC = 0x%X Multiplier = %f detected\n"), 
-				i->first, i->second);
+				i->first, i->second.m_Multiplier);
 			return &i->second;
 		}
 		else
@@ -183,7 +183,7 @@ const ShaderProfileData* ShaderPipelineData<T, Q>::FindProfile( ShaderProfileDat
 			if (i != map.end())
 			{
 				DEBUG_TRACE3(_T("ShaderCRC = 0x%X Multiplier = %f detected\n"), 
-					0, i->second);
+					0, i->second.m_Multiplier);
 				return &i->second;
 			}
 		}
