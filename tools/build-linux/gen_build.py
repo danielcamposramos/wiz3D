@@ -263,7 +263,9 @@ def main():
     lines = []
     w = lines.append
     w('rule cc')
-    w('  command = clang-cl @${out}.rsp /Fo${out} ${in}')
+    w('  command = clang-cl @${out}.rsp /clang:-MD /clang:-MF /clang:${out}.d /Fo${out} ${in}')
+    w('  depfile = ${out}.d')
+    w('  deps = gcc')
     w('  rspfile = ${out}.rsp')
     w('  rspfile_content = ${flags}')
     w('  description = CC ${in}')
