@@ -457,7 +457,11 @@ void ShiftFinder::summarizeDeltasSSE()
 		}
 		//--- convert correlation to UINT32 ---
 		diff_SSE2 = _mm_add_epi32(_mm_srli_si128(diff_SSE2, 8), diff_SSE2);
-		m_Curve[i + m_HalfSearchIndexRange] = ((const unsigned*)&diff_SSE2)[0];
+		{
+			UINT32 laneSum[4];
+			_mm_storeu_si128((__m128i*)laneSum, diff_SSE2);
+			m_Curve[i + m_HalfSearchIndexRange] = laneSum[0];
+		}
 	}
 }
 
