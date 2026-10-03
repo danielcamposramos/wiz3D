@@ -10,14 +10,15 @@
 #   BUILD=dir        build tree (default: ./build-linux-obj)
 #   WIZ3D_WITH_SR=0  Leia SR output stays out (the DX9 chain never uses it;
 #                    SimulatedRealityWeaveOutput is not part of this build)
-#   JOBS=8           parallel compile jobs
+#   JOBS=4           parallel compile jobs (maximum 4)
 set -e
 SOL=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 ARCHS=${1:-x64}
 [ "$ARCHS" = all ] && ARCHS="x64 x86"
 OUT=${OUT:-$SOL/out}
 BUILD=${BUILD:-$SOL/build-linux-obj}
-JOBS=${JOBS:-8}
+JOBS=${JOBS:-4}
+case "$JOBS" in 1|2|3|4) ;; *) echo "JOBS must be between 1 and 4" >&2; exit 2 ;; esac
 IMAGE=wiz3d-linux-build:latest
 [ "${WIZ3D_WITH_SR:-0}" = 0 ] || { echo "WIZ3D_WITH_SR=1 is not supported by the DX9 chain build" >&2; exit 2; }
 
@@ -29,10 +30,10 @@ OUT=$(CDPATH= cd -- "$OUT" && pwd)
 BUILD=$(CDPATH= cd -- "$BUILD" && pwd)
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
     echo "building image $IMAGE ..."
-    DOCKER_BUILDKIT=0 docker build --cpu-quota=800000 -t "$IMAGE" "$SOL/tools/build-linux"
+    DOCKER_BUILDKIT=0 docker build --cpu-quota=400000 -t "$IMAGE" "$SOL/tools/build-linux"
 fi
 for ARCH in $ARCHS; do
-docker run --rm --cpus 8 -u "$(id -u):$(id -g)" -e WIZ3D_ARCH=$ARCH -e ARCH=$ARCH -e JOBS=$JOBS -e SHA=$SHA -e DATE=$DATE \
+CONTAINER=$(docker run -d --cpus 4 -u "$(id -u):$(id -g)" -e WIZ3D_ARCH=$ARCH -e ARCH=$ARCH -e JOBS=$JOBS -e SHA=$SHA -e DATE=$DATE \
     -v "$SOL:$SOL:ro" -v "$OUT:/out" -v "$BUILD:/build" "$IMAGE" sh -c '
 set -e
 SOL="'"$SOL"'"
@@ -44,7 +45,13 @@ python3 "$SOL/tools/build-linux/gen_version.py" "$SOL" $B/ver "$SHA" "$DATE"
 XWIN_DIR=/opt/xwin python3 "$SOL/tools/build-linux/gen_build.py" "$SOL" $B
 ninja -C $B -j$JOBS -k 0 all
 python3 "$SOL/tools/build-linux/stage.py" $B /out/$ARCH "$SOL" $ARCH
-'
+')
+trap 'docker rm -f "$CONTAINER" >/dev/null' EXIT HUP INT TERM
+RESULT=$(docker wait "$CONTAINER")
+docker logs "$CONTAINER"
+docker rm "$CONTAINER" >/dev/null
+trap - EXIT HUP INT TERM
+[ "$RESULT" = 0 ] || exit "$RESULT"
 done
 ( cd "$OUT" && find . -type f ! -name SHA256SUMS -print | sort | xargs sha256sum > SHA256SUMS )
 echo "=== $OUT ==="; cat "$OUT/SHA256SUMS"
